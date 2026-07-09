@@ -1364,3 +1364,71 @@ dropdownA = Tabs.ExampleTab:Dropdown({
 	Value = { "All" },
 	Callback = function(option) end,
 })
+
+-- // TAMBAHKAN FITUR FARMING DI SINI // --
+do
+    local FarmTab = Window:Tab({
+        Title = "Nexzan Hub", 
+        Icon = "solar:settings-bold",
+        IconColor = Color3.fromHex("#10C550"), -- Green
+        IconShape = "Square",
+        Border = true,
+    })
+
+    local FarmSection = FarmTab:Section({
+        Title = "Auto Farm Features",
+    })
+
+    local TargetPos = CFrame.new(65, 2527, -382)
+    local Player = game:GetService("Players").LocalPlayer
+
+    FarmSection:Toggle({
+        Title = "Auto Fill Water",
+        Callback = function(v)
+            _G.AutoFill = v
+            task.spawn(function()
+                while _G.AutoFill do
+                    pcall(function() game:GetService("ReplicatedStorage").VerdantRemotes["VDT_Bucket.Used"]:FireServer() end)
+                    task.wait(0.1)
+                end
+            end)
+        end,
+    })
+
+    FarmSection:Toggle({
+        Title = "Auto Pour Bucket",
+        Callback = function(v)
+            _G.AutoPour = v
+            task.spawn(function()
+                while _G.AutoPour do
+                    if Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then Player.Character.HumanoidRootPart.CFrame = TargetPos end
+                    pcall(function() workspace.Scripted.CheckpointParts["1"]:GetChildren()[3].Scripted.ProximityPosition.ProximityPrompt:InputHoldBegin() workspace.Scripted.CheckpointParts["1"]:GetChildren()[3].Scripted.ProximityPosition.ProximityPrompt:InputHoldEnd() end)
+                    task.wait(0.3)
+                end
+            end)
+        end,
+    })
+
+    FarmSection:Toggle({
+        Title = "Auto Take Tokens",
+        Callback = function(v)
+            _G.AutoToken = v
+            task.spawn(function()
+                while _G.AutoToken do
+                    if Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then Player.Character.HumanoidRootPart.CFrame = TargetPos end
+                    pcall(function() workspace.Scripted.CheckpointParts["1"]:GetChildren()[3].Scripted.TakeTokens.ProximityPrompt:InputHoldBegin() workspace.Scripted.CheckpointParts["1"]:GetChildren()[3].Scripted.TakeTokens.ProximityPrompt:InputHoldEnd() end)
+                    task.wait(0.3)
+                end
+            end)
+        end,
+    })
+    
+    -- Watermark di paling bawah Tab
+    FarmTab:Space()
+    FarmTab:Section({
+        Title = "Nexzan Hub",
+        TextSize = 12,
+        TextTransparency = 0.5,
+        Justify = "Center"
+    })
+end
