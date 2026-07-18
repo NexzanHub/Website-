@@ -518,7 +518,7 @@ function Library.new()
     keyPanel.AnchorPoint = Vector2.new(0.5, 0.5)
     keyPanel.Size = UDim2.new(0, 320, 0, 150)
     keyPanel.Position = UDim2.new(0.5, 0, 0.5, 0)
-    keyPanel.BackgroundColor3 = Color3.fromRGB(205, 210, 218)
+    keyPanel.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
     keyPanel.BackgroundTransparency = 0.18
     keyPanel.BorderSizePixel = 0
     keyPanel.ZIndex = 51
